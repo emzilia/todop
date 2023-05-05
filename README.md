@@ -1,5 +1,5 @@
 # todop
-Very small cli todo application written in Python.
+Very small cli todo application written in Python. Requires Python.
 
 Place in ~/.local/bin so it can be executed within the terminal. When run, a file is created at /var/tmp/todop which is used to save the contents of the todo list.
 
