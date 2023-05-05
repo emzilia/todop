@@ -103,7 +103,7 @@ def clear_file() -> None:
 if user_command == '-h' or user_command == 'help':
     user_command: str = '--help'
 
-# I love match case statements, they're so clean
+# behavior set by user_command variable which is determined by args
 match user_command:
     case 'list':
         list_tasks()
@@ -116,6 +116,7 @@ match user_command:
     case '--help':
         show_help()
     case other:
+        # if no match for the command, it's treated as a todo item
         user_string: str = argv[1]
         add_task()
 
