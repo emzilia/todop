@@ -93,6 +93,14 @@ def show_help() -> None:
         '        clear      clears all tasks from the list.\n'
     )
 
+# cleans out the tmp file if you want it gone sooner.
+def delete_file() -> None:
+    tmp: Path = Path('/var/tmp/todop')
+    if tmp.is_file():
+        tmp.unlink()
+
+
+
 # consolidates help operands
 if user_command == '-h' or user_command == 'help':
     user_command: str = '--help'
@@ -109,3 +117,5 @@ match user_command:
         clear_tasks()
     case '--help':
         show_help()
+    case 'delete':
+        delete_file()
