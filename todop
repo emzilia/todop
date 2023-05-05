@@ -43,6 +43,7 @@ def rm_blank_lines(file) -> None:
 # runs blank line function and enumerates file line by line, including line
 # numbers
 def list_tasks() -> None:
+    print('')
     rm_blank_lines('/var/tmp/todop')
     with open("/var/tmp/todop", 'r+') as f:
         lines: list[str] = f.readlines()
