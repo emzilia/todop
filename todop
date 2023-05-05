@@ -20,6 +20,7 @@ if len(argv) == 2:
     # if the one argument isn't a number, it's treated as a 'command'.
     else:
         user_command: str = argv[1]
+        user_string: str = ''
 # if more than one argument is given it's assumed all the arguments are
 # part of one single todo task.
 if len(argv) > 2:
@@ -67,7 +68,7 @@ def done_task() -> None:
 # input given after the add command. 
 # appends user's string to a newline within the temp file.
 def add_task() -> None:
-    if len(argv) < 3:
+    if not user_string:
         with open("/var/tmp/todop", 'a') as f:
             user_input: str = input()
             f.write(f'\n{user_input}')
@@ -114,3 +115,7 @@ match user_command:
         clear_file()
     case '--help':
         show_help()
+    case other:
+        user_string: str = argv[1]
+        add_task()
+
