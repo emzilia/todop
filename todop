@@ -50,18 +50,15 @@ def list_tasks() -> None:
         item: str = item.strip('\n')
         print(f' {index + 1}: {item}')
     print('')
-    f.close()
 
 # removes specified line item by rewriting the file back to itself
 def done_task() -> None:
     with open("/var/tmp/todop", 'r') as f:
         lines: list[str] = f.readlines()
-    f.close()
     with open('/var/tmp/todop', 'w') as f:
         for index, line in enumerate(lines):
             if index != int(user_number)-1:
                 f.write(line)
-    f.close()
     list_tasks()
 
 # adds a task to the list using either the command arguments, or 
@@ -72,11 +69,9 @@ def add_task() -> None:
         with open("/var/tmp/todop", 'a') as f:
             user_input: str = input()
             f.write(f'\n{user_input}')
-        f.close()
     else:
         with open("/var/tmp/todop", 'a') as f:
             f.write(f'\n{user_string}')
-        f.close()
     list_tasks()
 
 # prints a cute little help readout
