@@ -5,11 +5,11 @@ Place in ~/.local/bin so it can be executed within the terminal. When run, a fil
 
 Usage:
 ```
-todop                 displays the todo list
-todop 3               adding a number clears that numbered item from the list
-todop brush teeth     add an item to the list with only the command alone
-todop add             lets you input a task in a long-form style
-todop clear           removes all items from the todo list, deletes file
+todop                 display the todo list
+todop 3               remove a numbered item from the list
+todop brush teeth     add an item to the list
+todop add             add to the list in a long-form style
+todop clear           clears all items from the list, deletes file
 ```
 
-This was created as a test and will be further developed/redesigned.
+This was created as a practice project and will be further developed/redesigned.
