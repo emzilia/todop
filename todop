@@ -74,20 +74,31 @@ def clear_file() -> None:
     if tmp.is_file():
         tmp.unlink()
 
+# running the command by itself shows the todo list
 if len(argv) == 1:
     list_tasks()
     quit()
+# with one argument, add, clear, and help are accepted commands
+# numbers remove the specified item from the list
+# any other string adds the string to the list
 if len(argv) == 2:
     if argv[1] == 'add':
+        user_string = ''
         add_task()
     elif argv[1] == 'clear':
         clear_file()
     elif argv[1] in ['--help', '-h', 'help']:
         show_help()
     elif argv[1].isnumeric():
-        user_number: int = int(argv[1])
-        done_task(user_number)
-else:
+        done_task(int(argv[1]))
+    else:
+        user_string: str = ''
+        for word in argv[1:]:
+            user_string += word + ' '
+        add_task()
+# with more than one argument, all arguments are treated as a single
+# sentence that is added to the list.
+elif len(argv) > 2:
     user_string: str = ''
     for word in argv[1:]:
         user_string += word + ' '
