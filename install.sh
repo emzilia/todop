@@ -10,7 +10,7 @@ if [ -f "$SCRIPTPATH" ]; then
 	if [ ! -f "$SCRIPTPATH" ]; then
 		echo "Script successfully uninstalled!"
 	fi
-else
+elif [ ! -f "$SCRIPTPATH" ]; then
 	echo "Installing todop script"
 	cp "$SCRIPT" "$SCRIPTPATH"
 	if [ -f "$SCRIPTPATH" ]; then
