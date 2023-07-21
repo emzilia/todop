@@ -9,11 +9,15 @@ if [ -f "$SCRIPTPATH" ]; then
 	rm "$SCRIPTPATH"
 	if [ ! -f "$SCRIPTPATH" ]; then
 		echo "Script successfully uninstalled!"
+	else
+		echo "Error: Uninstallation failed"
 	fi
 elif [ ! -f "$SCRIPTPATH" ]; then
 	echo "Installing todop script"
 	cp "$SCRIPT" "$SCRIPTPATH"
 	if [ -f "$SCRIPTPATH" ]; then
 		echo "Script successfully installed!"
+	else
+		echo "Error: installation failed"
 	fi
 fi
