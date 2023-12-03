@@ -1,23 +1,23 @@
-#!/bin/bash
+#!/bin/sh
 
 SCRIPT='todop'
-SCRIPTPATH="$HOME/.local/bin/tdp"
+SCRIPTPATH="${HOME}/.local/bin/tdp"
 
 # If file exists, remove it, if it doesn't, copy it over.
-if [ -f "$SCRIPTPATH" ]; then
-	echo "Uninstalling todop script"
-	rm "$SCRIPTPATH"
-	if [ ! -f "$SCRIPTPATH" ]; then
-		echo "Script successfully uninstalled!"
+if [ -f "${SCRIPTPATH}" ]; then
+	printf "Uninstalling todop script\n"
+	rm "${SCRIPTPATH}"
+	if [ ! -f "${SCRIPTPATH}" ]; then
+		printf "Script successfully uninstalled!\n"
 	else
-		echo "Error: Uninstallation failed"
+		printf "Error: Uninstallation failed\n"
 	fi
-elif [ ! -f "$SCRIPTPATH" ]; then
-	echo "Installing todop script"
-	cp "$SCRIPT" "$SCRIPTPATH"
-	if [ -f "$SCRIPTPATH" ]; then
-		echo "Script successfully installed!"
+elif [ ! -f "${SCRIPTPATH}" ]; then
+	printf "Installing todop script\n"
+	cp "${SCRIPT}" "${SCRIPTPATH}"
+	if [ -f "${SCRIPTPATH}" ]; then
+		printf "Script successfully installed!\n"
 	else
-		echo "Error: installation failed"
+		printf "Error: installation failed\n"
 	fi
 fi
