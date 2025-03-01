@@ -7,6 +7,7 @@ class NoteList():
     # file contents are all saved to a tmp file, it's only 
     # a daily todo after all.
     def __init__(self):
+        self.user_input = ''
         self.pathstr = "/var/tmp/todop"
         self.path = Path(self.pathstr)
         if not self.path.is_file():
@@ -28,7 +29,7 @@ class NoteList():
     # including line numbers
     def list_tasks(self) -> None:
         print('')
-        notes.rm_lines(self.path)
+        self.rm_lines(self.path)
         with open(self.path, 'r+') as f:
             lines: list[str] = f.readlines()
         for index, item in enumerate(lines):
@@ -50,17 +51,17 @@ class NoteList():
     # input given after the add command. 
     # appends user's string to a newline within the temp file.
     def add_task(self) -> None:
-        if not user_string:
+        if not self.user_string:
             with open(self.path, 'a') as f:
-                user_input: str = input()
-                f.write(f'\n{user_input}')
+                self.user_input: str = input()
+                f.write(f'\n{self.user_input}')
         else:
             with open(self.path, 'a') as f:
-                f.write(f'\n{user_string}')
+                f.write(f'\n{self.user_string}')
         self.list_tasks()
 
     # prints a cute little help readout
-    def show_help() -> None:
+    def show_help(self) -> None:
         print(
             'Usage: tdp [command/number] (todo items in sentence form)\n\n'
             '    Run by itself to show the todo list.\n' 
@@ -77,36 +78,35 @@ class NoteList():
         if tmp.is_file():
             tmp.unlink()
 
-notes = NoteList()
+    def process_args(self):
+        # running the command by itself shows the todo list
+        if len(argv) == 1:
+            self.list_tasks()
+            quit()
 
-if __name__ == "__main__":
-    # running the command by itself shows the todo list
-    if len(argv) == 1:
-        notes.list_tasks()
-        quit()
-
-    # with one argument, add, clear, and help are accepted commands
-    # numbers remove the specified item from the list
-    # any other string adds the string to the list
-    if len(argv) == 2:
-        if argv[1] == 'add':
-            user_string = ''
-            notes.add_task()
-        elif argv[1] == 'clear':
-            notes.clear_file()
-        elif argv[1] in ['--help', '-h', 'help']:
-            notes.show_help()
-        elif argv[1].isnumeric():
-            notes.done_task(int(argv[1]))
-        else:
-            user_string: str = ''
+        # with one argument, add, clear, and help are accepted commands
+        # numbers remove the specified item from the list
+        # any other string adds the string to the list
+        if len(argv) == 2:
+            if argv[1] == 'add':
+                self.user_string = ''
+                self.add_task()
+            elif argv[1] == 'clear':
+                self.clear_file()
+            elif argv[1] in ['--help', '-h', 'help']:
+                self.show_help()
+            elif argv[1].isnumeric():
+                self.done_task(int(argv[1]))
+            else:
+                self.user_string: str = ''
+                for word in argv[1:]:
+                    self.user_string += word + ' '
+                self.add_task()
+        # with more than one argument, all arguments are treated as a single
+        # sentence that is added to the list.
+        elif len(argv) > 2:
+            self.user_string: str = ''
             for word in argv[1:]:
-                user_string += word + ' '
-            notes.add_task()
-    # with more than one argument, all arguments are treated as a single
-    # sentence that is added to the list.
-    elif len(argv) > 2:
-        user_string: str = ''
-        for word in argv[1:]:
-            user_string += word + ' '
-        notes.add_task()
+                self.user_string += word + ' '
+            self.add_task()
+
