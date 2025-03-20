@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+
+from sys import argv
+from pathlib import Path
+
+# file contents are all saved to a tmp file, it's only a daily todo after all.
+tmp: Path = Path('/var/tmp/todop')
+if not tmp.is_file():
+    with open('/var/tmp/todop', 'x') as t:
+        t.close()
+
+# running the command by itself will show the todo list.
+if len(argv) == 1:
+    user_command: str = 'list'
+# if one argument is given and it's a number, that numbered item is removed.
+if len(argv) == 2:
+    if argv[1].isnumeric():
+        user_command: str = 'done'
+        user_number: int = int(argv[1])
+    # if the one argument isn't a number, it's treated as a 'command'.
+    else:
+        user_command: str = argv[1]
+# if more than one argument is given it's assumed all the arguments are
+# part of one single todo task.
+if len(argv) > 2:
+    user_string: str = ''
+    user_command: str = 'add'
+    for word in argv[1:]:
+        user_string += word + ' '
+
+# small function to remove any errant newlines that wind up within the file.
+def rm_blank_lines(file) -> None:
+    file = Path(file)
+    lines: list[str] = file.read_text().splitlines()
+    filtered: list[str] = [
+        line
+        for line in lines
+        if line.strip()
+    ]
+    file.write_text('\n'.join(filtered))
+
+# runs blank line function and enumerates file line by line, including line
+# numbers
+def list_tasks() -> None:
+    rm_blank_lines('/var/tmp/todop')
+    with open("/var/tmp/todop", 'r+') as f:
+        lines: list[str] = f.readlines()
+    for index, item in enumerate(lines):
+        item: str = item.strip('\n')
+        print(f' {index + 1}: {item}')
+    print('')
+    f.close()
+
+# rewrites file back to itself while removing the line item specified
+def done_task() -> None:
+    with open("/var/tmp/todop", 'r') as f:
+        lines: list[str] = f.readlines()
+    f.close()
+    with open('/var/tmp/todop', 'w') as f:
+        for index, line in enumerate(lines):
+            if index != int(user_number)-1:
+                f.write(line)
+    f.close()
+    list_tasks()
+
+# appends user's string to a newline within the temp file, adding to the list
+def add_task() -> None:
+    if len(argv) < 3:
+        with open("/var/tmp/todop", 'a') as f:
+            user_input: str = input()
+            f.write(f'\n{user_input}')
+        f.close()
+    else:
+        with open("/var/tmp/todop", 'a') as f:
+            f.write(f'\n{user_string}')
+        f.close()
+    list_tasks()
+
+# rewrites the file without saving the contents to buffer, clearing it
+def clear_tasks() -> None:
+    with open("/var/tmp/todop", 'w') as f:
+        f.close()
+
+# prints a cute little help readout
+def show_help() -> None:
+    print(
+        'Usage: todop [command/number] (todo items in sentence form)\n\n'
+        '    Run by itself to show the todo list.\n' 
+        '    Add one number as an argument to remove it from the list.\n'
+        "    Items can be added quicker with 'todop xyz'\n\n"
+        '    Commands:\n'
+        '        add        adds a task to the list.\n'
+        '        clear      clears all tasks from the list.\n'
+    )
+
+# consolidates help operands
+if user_command == '-h' or user_command == 'help':
+    user_command: str = '--help'
+
+# I love match case statements, they're so clean
+match user_command:
+    case 'list':
+        list_tasks()
+    case 'done':
+        done_task()
+    case 'add':
+        add_task()
+    case 'clear':
+        clear_tasks()
+    case '--help':
+        show_help()
