@@ -51,7 +51,7 @@ def list_tasks() -> None:
     print('')
     f.close()
 
-# rewrites file back to itself while removing the line item specified
+# removes specified line item by rewriting the file back to itself
 def done_task() -> None:
     with open("/var/tmp/todop", 'r') as f:
         lines: list[str] = f.readlines()
@@ -63,7 +63,9 @@ def done_task() -> None:
     f.close()
     list_tasks()
 
-# appends user's string to a newline within the temp file, adding to the list
+# adds a task to the list using either the command arguments, or 
+# input given after the add command. 
+# appends user's string to a newline within the temp file.
 def add_task() -> None:
     if len(argv) < 3:
         with open("/var/tmp/todop", 'a') as f:
@@ -91,6 +93,7 @@ def show_help() -> None:
         '    Commands:\n'
         '        add        adds a task to the list.\n'
         '        clear      clears all tasks from the list.\n'
+        '        delete     deletes the tmp file of tasks.\n'
     )
 
 # cleans out the tmp file if you want it gone sooner.
