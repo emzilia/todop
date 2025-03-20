@@ -2,11 +2,11 @@
 Very small cli todo application written in Python. Requires Python.
 
 ### installation
-Run the included install.sh with '''bash install.sh''' 
+Run the included install.sh with ```bash install.sh```
 The install.sh can be run a second time to remove the file from your .local/bin
 
 ### usage 
-When run, a file is created at /var/tmp/todop which is used to save the contents of the todo list.
+When run, a file is created at ```/var/tmp/todop``` which is used to save the contents of the todo list.
 
 commands:
 ```
