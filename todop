@@ -4,9 +4,10 @@ from sys import argv
 from pathlib import Path
 
 # file contents are all saved to a tmp file, it's only a daily todo after all.
-tmp: Path = Path('/var/tmp/todop')
+todo_path: str = '/var/tmp/todop'
+tmp: Path = Path(todo_path)
 if not tmp.is_file():
-    with open('/var/tmp/todop', 'x') as t:
+    with open(todo_path, 'x') as t:
         t.close()
 
 # running the command by itself will show the todo list.
@@ -44,8 +45,8 @@ def rm_blank_lines(file) -> None:
 # numbers
 def list_tasks() -> None:
     print('')
-    rm_blank_lines('/var/tmp/todop')
-    with open("/var/tmp/todop", 'r+') as f:
+    rm_blank_lines(todo_path)
+    with open(todo_path, 'r+') as f:
         lines: list[str] = f.readlines()
     for index, item in enumerate(lines):
         item: str = item.strip('\n')
@@ -54,9 +55,9 @@ def list_tasks() -> None:
 
 # removes specified line item by rewriting the file back to itself
 def done_task() -> None:
-    with open("/var/tmp/todop", 'r') as f:
+    with open(todo_path, 'r') as f:
         lines: list[str] = f.readlines()
-    with open('/var/tmp/todop', 'w') as f:
+    with open(todo_path, 'w') as f:
         for index, line in enumerate(lines):
             if index != int(user_number)-1:
                 f.write(line)
@@ -67,11 +68,11 @@ def done_task() -> None:
 # appends user's string to a newline within the temp file.
 def add_task() -> None:
     if not user_string:
-        with open("/var/tmp/todop", 'a') as f:
+        with open(todo_path, 'a') as f:
             user_input: str = input()
             f.write(f'\n{user_input}')
     else:
-        with open("/var/tmp/todop", 'a') as f:
+        with open(todo_path, 'a') as f:
             f.write(f'\n{user_string}')
     list_tasks()
 
@@ -89,7 +90,7 @@ def show_help() -> None:
 
 # clears the list, starts fresh with a new file on the next run
 def clear_file() -> None:
-    tmp: Path = Path('/var/tmp/todop')
+    tmp: Path = Path(todo_path)
     if tmp.is_file():
         tmp.unlink()
 
