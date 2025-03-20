@@ -88,7 +88,6 @@ def show_help() -> None:
         '    Commands:\n'
         '        add        adds a task to the list.\n'
         '        clear      clears all tasks from the list.\n'
-        '        delete     deletes the tmp file of tasks.\n'
     )
 
 # clears the list, starts fresh with a new file on the next run
