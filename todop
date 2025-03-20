@@ -59,10 +59,10 @@ def add_task() -> None:
 # prints a cute little help readout
 def show_help() -> None:
     print(
-        'Usage: todop [command/number] (todo items in sentence form)\n\n'
+        'Usage: tdp [command/number] (todo items in sentence form)\n\n'
         '    Run by itself to show the todo list.\n' 
         '    Add one number as an argument to remove it from the list.\n'
-        "    Items can be added quicker with 'todop xyz'\n\n"
+        "    Items can be added in one line with 'tdp foo bar'\n\n"
         '    Commands:\n'
         '        add        adds a task to the list.\n'
         '        clear      clears all tasks from the list.\n'
