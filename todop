@@ -78,11 +78,6 @@ def add_task() -> None:
         f.close()
     list_tasks()
 
-# rewrites the file without saving the contents to buffer, clearing it
-def clear_tasks() -> None:
-    with open("/var/tmp/todop", 'w') as f:
-        f.close()
-
 # prints a cute little help readout
 def show_help() -> None:
     print(
@@ -96,8 +91,8 @@ def show_help() -> None:
         '        delete     deletes the tmp file of tasks.\n'
     )
 
-# cleans out the tmp file if you want it gone sooner.
-def delete_file() -> None:
+# clears the list, starts fresh with a new file on the next run
+def clear_file() -> None:
     tmp: Path = Path('/var/tmp/todop')
     if tmp.is_file():
         tmp.unlink()
@@ -117,8 +112,6 @@ match user_command:
     case 'add':
         add_task()
     case 'clear':
-        clear_tasks()
+        clear_file()
     case '--help':
         show_help()
-    case 'delete':
-        delete_file()
