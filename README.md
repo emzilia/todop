@@ -2,7 +2,8 @@
 Very small cli todo application written in Python. Requires Python.
 
 ### installation
-Run the included install.sh with ```bash install.sh```
+First, read the ```install.sh```` file to see what it's doing to your system.   
+Then, run the file with ```bash install.sh```    
 The install.sh can be run a second time to remove the file from your .local/bin
 
 ### usage 
