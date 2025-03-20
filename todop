@@ -10,7 +10,7 @@ if not tmp.is_file():
     with open(todo_path, 'x') as t:
         t.close()
 
-# small function to remove any errant newlines that wind up within the file.
+# ensures there are no extra newlines within the tmp file
 def rm_blank_lines(file) -> None:
     file = Path(file)
     lines: list[str] = file.read_text().splitlines()
