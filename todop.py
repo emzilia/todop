@@ -4,7 +4,8 @@ from sys import argv
 from pathlib import Path
 
 class NoteList():
-    # file contents are all saved to a tmp file, it's only a daily todo after all.
+    # file contents are all saved to a tmp file, it's only 
+    # a daily todo after all.
     def __init__(self):
         self.pathstr = "/var/tmp/todop"
         self.path = Path(self.pathstr)
@@ -23,8 +24,8 @@ class NoteList():
         ]
         file.write_text('\n'.join(filtered))
 
-    # runs blank line function and enumerates file line by line, including line
-    # numbers
+    # runs blank line function and enumerates file line by line,
+    # including line numbers
     def list_tasks(self) -> None:
         print('')
         notes.rm_lines(self.path)
