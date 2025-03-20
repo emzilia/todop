@@ -10,26 +10,6 @@ if not tmp.is_file():
     with open(todo_path, 'x') as t:
         t.close()
 
-# running the command by itself will show the todo list.
-if len(argv) == 1:
-    user_command: str = 'list'
-# if one argument is given and it's a number, that numbered item is removed.
-if len(argv) == 2:
-    if argv[1].isnumeric():
-        user_command: str = 'done'
-        user_number: int = int(argv[1])
-    # if the one argument isn't a number, it's treated as a 'command'.
-    else:
-        user_command: str = argv[1]
-        user_string: str = ''
-# if more than one argument is given it's assumed all the arguments are
-# part of one single todo task.
-if len(argv) > 2:
-    user_string: str = ''
-    user_command: str = 'add'
-    for word in argv[1:]:
-        user_string += word + ' '
-
 # small function to remove any errant newlines that wind up within the file.
 def rm_blank_lines(file) -> None:
     file = Path(file)
@@ -54,12 +34,12 @@ def list_tasks() -> None:
     print('')
 
 # removes specified line item by rewriting the file back to itself
-def done_task() -> None:
+def done_task(item_number) -> None:
     with open(todo_path, 'r') as f:
         lines: list[str] = f.readlines()
     with open(todo_path, 'w') as f:
         for index, line in enumerate(lines):
-            if index != int(user_number)-1:
+            if index != int(item_number)-1:
                 f.write(line)
     list_tasks()
 
@@ -94,26 +74,21 @@ def clear_file() -> None:
     if tmp.is_file():
         tmp.unlink()
 
-
-
-# consolidates help operands
-if user_command == '-h' or user_command == 'help':
-    user_command: str = '--help'
-
-# behavior set by user_command variable which is determined by args
-match user_command:
-    case 'list':
-        list_tasks()
-    case 'done':
-        done_task()
-    case 'add':
+if len(argv) == 1:
+    list_tasks()
+    quit()
+if len(argv) == 2:
+    if argv[1] == 'add':
         add_task()
-    case 'clear':
+    elif argv[1] == 'clear':
         clear_file()
-    case '--help':
+    elif argv[1] in ['--help', '-h', 'help']:
         show_help()
-    case other:
-        # if no match for the command, it's treated as a todo item
-        user_string: str = argv[1]
-        add_task()
-
+    elif argv[1].isnumeric():
+        user_number: int = int(argv[1])
+        done_task(user_number)
+else:
+    user_string: str = ''
+    for word in argv[1:]:
+        user_string += word + ' '
+    add_task()
