@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SCRIPT='todop'
+SCRIPT='todop.py'
 SCRIPTPATH="${HOME}/.local/bin/tdp"
 
 # If file exists, remove it, if it doesn't, copy it over.
