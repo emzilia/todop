@@ -8,7 +8,7 @@ The recommended installation method is via [pipx](https://github.com/pypa/pipx),
 ### usage 
 When run, a file is created at ```/var/tmp/todop``` which is used to save the contents of the todo list.
 
-commands:
+Commands:
 ```
 tdp                 display the todo list
 tdp 3               remove a numbered item from the list
